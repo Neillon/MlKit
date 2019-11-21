@@ -14,17 +14,12 @@ namespace MachineLearning.Validation
 		private double[,] _testDataSet;
 		private int[] _testOutput;
 
-		public HoldoutValidation()
-		{
-			_percentage = 0.8;
-		}
+		public HoldoutValidation() { _percentage = 0.8; }
 
 		public HoldoutValidation(double? percentageToTrain = 0.8)
 		{
-			if (percentageToTrain.HasValue && percentageToTrain > 1)
-				_percentage = percentageToTrain.Value / 100;
-			else
-				_percentage = 0.8;
+			var hasPercentage = percentageToTrain.HasValue && percentageToTrain > 1;
+			_percentage = hasPercentage ? percentageToTrain.Value : 0.8;
 		}
 
 		private void SplitDataset(double[,] input, int[] output)

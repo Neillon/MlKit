@@ -13,7 +13,7 @@ namespace MlKit
 		static void Main(string[] args)
 		{
 
-			var reader = new Dataset(@"C:\datasets\iris.data", null);
+			var reader = new Dataset(@"C:\datasets\iris.csv", null);
 
 			var knn = new KNN(3);
 			
