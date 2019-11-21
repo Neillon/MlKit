@@ -1,5 +1,5 @@
 ﻿using MachineLearning.Classification;
-using MachineLearning.IO;
+using MachineLearning.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -149,7 +149,7 @@ namespace MachineLearning.Validation
 			return shapes;
 		}
 
-		public void Validate(IClassifier classifier, DatasetReader csvReader)
+		public double Validate(IClassifier classifier, Dataset csvReader)
 		{
 			SplitDataset(csvReader.Input, csvReader.Output);
 
@@ -171,7 +171,8 @@ namespace MachineLearning.Validation
 					numberOfTrues++;
 
 			double accuracy = Convert.ToDouble(numberOfTrues) / Convert.ToDouble(_testOutput.Length);
-			Console.WriteLine($"Acr.: {accuracy}");
+
+			return accuracy;
 		}
 
 		private double[] GetLineOfTestDataset(int line)
