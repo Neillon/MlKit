@@ -64,12 +64,12 @@ namespace Common.Extensions
 		}
 
 		/// <summary>
-		/// Get an array of string and transform to int array <br />
+		/// Categorize an array by your value <br />
 		/// Use for classification outputs that requires the output to be a int array
 		/// </summary>
 		/// <param name="classes"></param>
 		/// <returns>int[]</returns>
-		public static int[] TransformToOutputVector(this string[] classes)
+		public static int[] Categorize(this string[] classes)
 		{
 			// transform the values lowercased strings without leading and trailing whit-spaces
 			// Get the distinct values of a string[]
