@@ -25,15 +25,15 @@ namespace MachineLearning.Core
 		{
 			// initialize some values
 			var lines = ReadFile(filePath);
-			var featuresCount = lines[0].Split(',').Length - 1;
-			ClassIndex = classIndex ?? featuresCount;
+			var numberOfFeatures = lines[0].Split(',').Length - 1;
+			ClassIndex = classIndex ?? numberOfFeatures; // defines the class index to be the last
 
-			Input = GetInputFromStringArray(lines, featuresCount);
-			Output = GetOutputFromStringArray(lines.ToArray());
+			Input = GetInput(lines, numberOfFeatures);
+			Output = GetOutput(lines.ToArray());
 		}
 
 		/// <summary>
-		/// Read a file and return an string array that contains all non-empty lines of readed file on each index
+		/// Read a file and return an string array that contains all non-empty lines
 		/// </summary>
 		/// <param name="filePath"></param>
 		/// <returns>string[]</returns>
@@ -45,24 +45,22 @@ namespace MachineLearning.Core
 				while (!reader.EndOfStream)
 				{
 					var line = reader.ReadLine();
-					lines.Add(line);
+					if (!string.IsNullOrEmpty(line))
+						lines.Add(line);
 				}
 			}
 
-			return lines
-				.Where(p => !string.IsNullOrEmpty(p))
-				.ToArray();
+			return lines.ToArray();
 		}
 
 		/// <summary>
-		/// Takes ans list of string, split and returns the converted input data
+		/// Returns the input data based in the lines of readed file
 		/// </summary>
-		/// <param name="lines"></param>
-		/// <param name="numFeatures"></param>
+		/// <param name="lines">Lines of readed file</param>
+		/// <param name="numFeatures">number of features in the dataset</param>
 		/// <returns>double[,]</returns>
-		private double[,] GetInputFromStringArray(string[] lines, int numFeatures)
+		private double[,] GetInput(string[] lines, int numFeatures)
 		{
-			
 			Input = new double[lines.Count(), numFeatures];
 
 			// populate input matrix
@@ -80,11 +78,12 @@ namespace MachineLearning.Core
 		}
 
 		/// <summary>
-		/// Takes ans list of string, split and returns the outputs based on defined ClassIndex 
+		/// Return the list of classes in a dataset <br />
+		/// Use the ClassIndex of dataset to get the column values
 		/// </summary>
-		/// <param name="lines"></param>
+		/// <param name="lines">Lines of readed file</param>
 		/// <returns>int[]</returns>
-		private int[] GetOutputFromStringArray(string[] lines)
+		private int[] GetOutput(string[] lines)
 		{
 			var classes = new List<string>();
 
